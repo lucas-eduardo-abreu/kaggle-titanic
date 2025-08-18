@@ -46,13 +46,13 @@
 ## 🔄 Fluxo do Pipeline
 ```mermaid
 flowchart TD
-    A[📂 train.csv] --> B[🔧 Data Prep<br/> (data_prep.py)]
-    B --> C[🤖 Modelo<br/> Logistic Regression + GridSearchCV]
-    C --> D[💾 artifacts/model.joblib]
-    D --> E[📂 test.csv]
-    E --> F[🔮 Inferência<br/> (predict_logreg.py)]
-    F --> G[📄 submission.csv]
-    G --> H[🌐 Kaggle Leaderboard]
+    A["📂 train.csv"] --> B["🔧 Data Prep\n(data_prep.py)"]
+    B --> C["🤖 Modelo\nLogistic Regression + GridSearchCV"]
+    C --> D["💾 artifacts/model.joblib"]
+    D --> E["📂 test.csv"]
+    E --> F["🔮 Inferência\n(predict_logreg.py)"]
+    F --> G["📄 submission.csv"]
+    G --> H["🌐 Kaggle Leaderboard"]
 ```
 
 ---
