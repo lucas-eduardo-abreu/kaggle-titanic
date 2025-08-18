@@ -1,5 +1,8 @@
 # 🚢 Titanic Survivors Challenge – Kaggle Edition
 
+[![Português](https://img.shields.io/badge/lang-PT--BR-green)](#-objetivo)  
+[![English](https://img.shields.io/badge/lang-EN-blue)](#-english-tldr-quick-pitch)
+
 ![Titanic](https://upload.wikimedia.org/wikipedia/commons/f/fd/RMS_Titanic_3.jpg)
 
 > “Even God himself could not sink this ship.” – eles disseram…  
@@ -146,3 +149,33 @@ Sugestões de novas features, melhorias no pipeline ou até piadas com o Titanic
 ## ⚓ Divirta-se!
 <b>Spoiler histórico:</b> Jack cabia na porta sim, mas nosso modelo ainda não sabe disso... 🚪😅
 
+
+---
+
+## 🌍 English TL;DR (Quick Pitch)
+
+Welcome aboard the **Titanic ML Project**! 🚢  
+We use **Logistic Regression (with GridSearchCV)** and feature engineering to predict who survived the Titanic disaster.
+
+### 🔑 Features
+- Python + scikit-learn pipeline
+- Cross-validation & hyperparameter tuning
+- Fun feature engineering (Title, FamilySize, Age bins, etc.)
+- Generates `submission.csv` for [Kaggle Titanic Competition](https://www.kaggle.com/c/titanic)
+
+### 🏃 Quickstart
+```bash
+# Linux / macOS
+python train_logreg_grid.py --train data/train.csv --out artifacts/model.joblib --metrics artifacts/metrics.json
+python predict_logreg.py --model artifacts/model.joblib --test data/test.csv --out artifacts/submission.csv
+
+# Windows (PowerShell)
+python .\train_logreg_grid.py --train data\train.csv --out artifacts/model.joblib --metrics artifacts/metrics.json
+python .\predict_logreg.py --model artifacts/model.joblib --test data/test.csv --out artifacts/submission.csv
+```
+
+--- 
+
+### 🎉 Submission
+
+Upload your generated submission.csv on Kaggle and climb the leaderboard! 🏆
