@@ -3,7 +3,7 @@
 [![Português](https://img.shields.io/badge/lang-PT--BR-green)](#-objetivo)  
 [![English](https://img.shields.io/badge/lang-EN-blue)](#-english-tldr-quick-pitch)
 
-![Titanic](https://upload.wikimedia.org/wikipedia/commons/f/fd/RMS_Titanic_3.jpg)
+![Titanic](assets/titanic.jpg)
 
 > “Even God himself could not sink this ship.” – eles disseram…  
 > Pois bem, vamos ver se sua **Regressão Logística** consegue prever quem afunda e quem sobrevive! ⚓😅
