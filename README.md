@@ -1,181 +1,44 @@
-# 🚢 Titanic Survivors Challenge – Kaggle Edition
+# kaggle-titanic
 
-[![Português](https://img.shields.io/badge/lang-PT--BR-green)](#-objetivo)  
-[![English](https://img.shields.io/badge/lang-EN-blue)](#-english-tldr-quick-pitch)
+Titanic survival prediction for the [Kaggle competition](https://www.kaggle.com/c/titanic).
+Logistic Regression pipeline with feature engineering, stratified cross-validation,
+and optional GridSearchCV hyperparameter tuning.
 
-![Titanic](assets/titanic.jpg)
+## Stack
 
-> “Even God himself could not sink this ship.” – eles disseram…  
-> Pois bem, vamos ver se sua **Regressão Logística** consegue prever quem afunda e quem sobrevive! ⚓😅
+- Python 3.13+ · pandas · scikit-learn · loguru · joblib
 
----
+## Pipeline
 
-## ✨ Badges
+Feature engineering: passenger title extraction (with royalty/officer normalization),
+family size, alone flag, cabin deck, ticket group size, fare per person, age bins,
+and interaction features (sex × class, alone × class).
 
-![Python](https://img.shields.io/badge/Python-3.13%2B-blue?logo=python&logoColor=yellow)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange?logo=scikit-learn)
-![Kaggle](https://img.shields.io/badge/Kaggle-Competition-blue?logo=kaggle)
-![Status](https://img.shields.io/badge/Leaderboard-Climb%20⛰️-brightgreen)
+`ColumnTransformer` with median imputation + scaling for numerics and most-frequent
+imputation + OHE for categoricals. Classifier: `LogisticRegression(max_iter=2000)`.
 
----
+## Running
 
-## 🎯 Objetivo
-
-- Usar **Machine Learning** para prever quem sobreviveu ao Titanic.  
-- Treinar modelos (começamos com **Regressão Logística**).  
-- Gerar `submission.csv` para enviar no [Kaggle Titanic Competition](https://www.kaggle.com/c/titanic/submit).
-
----
-
-## 🛠️ Estrutura do Projeto
-```bash
-├── data/
-│ ├── train.csv # Dados de treino
-│ └── test.csv # Dados de teste
-├── src/
-│ ├── init.py
-│ ├── data_prep.py # Criação e limpeza de features
-│ ├── model_logreg.py # Pipeline + GridSearchCV
-│ └── inference.py # Inferência e submissão
-├── artifacts/ # Modelos, métricas, submissões
-├── train_logreg.py # Treino baseline
-├── train_logreg_grid.py# Treino com GridSearchCV
-├── predict_logreg.py # Geração de submission.csv
-└── README.md
-```
-
----
-
-## 🔄 Fluxo do Pipeline
-```mermaid
-flowchart TD
-    A["📂 train.csv"] --> B["🔧 Data Prep\n(data_prep.py)"]
-    B --> C["🤖 Modelo\nLogistic Regression + GridSearchCV"]
-    C --> D["💾 artifacts/model.joblib"]
-    D --> E["📂 test.csv"]
-    E --> F["🔮 Inferência\n(predict_logreg.py)"]
-    F --> G["📄 submission.csv"]
-    G --> H["🌐 Kaggle Leaderboard"]
-```
-
----
-
-## ⚙️ Instalação
-
-### 1. Clone o repositório
-```bash
-git clone git@github.com:Baihanu/kaggle-titanic.git
-cd kaggle-titanic
-```
-
-### 2. Crie o ambiente virtual
-Linux/macOS:
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-Windows (PowerShell):
-```bash
-python -m venv .venv
-.\.venv\Scripts\Activate
-```
-
-### 3. Instale as dependências
 ```bash
 pip install -r requirements.txt
-```
 
----
+# Option A — baseline (no grid search)
+python train_logreg.py --train data/train.csv --out artifacts/model_logreg.joblib
 
-## 🚂 Treinando o modelo
+# Option B — with GridSearchCV
+python train_logreg_grid.py --train data/train.csv --out artifacts/model_logreg.joblib --coef-report artifacts/coef_report.csv
 
-### Opção A – Treino rápido (baseline)
-```bash
-python train_logreg.py --train data/train.csv --out artifacts/model_logreg.joblib --metrics artifacts/metrics.json
-```
-
-### Opção B – Treino com GridSearchCV
-```bash
-python train_logreg_grid.py --train data/train.csv --out artifacts/model_logreg.joblib --metrics artifacts/metrics.json --coef-report artifacts/coef_report.csv
-```
-
-📊 Resultados:
- - artifacts/metrics.json → métricas de CV
- - artifacts/coef_report.csv → coeficientes do modelo
-
----
-
-## 🔮 Gerando a submissão
-```bash
+# Generate submission
 python predict_logreg.py --model artifacts/model_logreg.joblib --test data/test.csv --out artifacts/submission.csv
 ```
-🎉 Agora você tem artifacts/submission.csv, pronto para enviar ao Kaggle!
 
----
+Download `train.csv` and `test.csv` from the [Kaggle competition page](https://www.kaggle.com/c/titanic/data)
+and place them in `data/`.
 
-## 🌍 Compatibilidade Linux/Windows
- - Scripts testados em Linux 🐧 e Windows PowerShell 🪟.
- - Ajuste apenas os separadores (/ vs. \).
- - Exemplo no Windows:
- ```bash
-python .\train_logreg_grid.py --train data\train.csv --out artifacts\model_logreg.joblib --metrics artifacts\metrics.json --coef-report artifacts\coef_report.csv
-```
+## Tests
 
----
-
-## 🏆 Submissão no Kaggle
- 1. Vá até a [competição no Kaggle](https://www.kaggle.com/c/titanic/submit).
- 2. Clique em Submit Predictions.
- 3. Envie submission.csv.
- 4. Veja sua pontuação aparecer na Leaderboard. 🚀
-
---- 
-
-## 😎 Dicas para melhorar a pontuação
- - Feature Engineering: idade em faixas, família, títulos (Mr, Mrs, Miss), porto de embarque.
- - Experimente Random Forest, Gradient Boosting, XGBoost, LightGBM.
- - Ajuste o threshold da Regressão Logística (não precisa ser sempre 0.5).
- - Use cross-validation para validar mudanças.
-
----
-
-## 🤝 Contribuindo
-Pull Requests são bem-vindos!
-Sugestões de novas features, melhorias no pipeline ou até piadas com o Titanic são aceitas. 😄
-
----
-
-## ⚓ Divirta-se!
-<b>Spoiler histórico:</b> Jack cabia na porta sim, mas nosso modelo ainda não sabe disso... 🚪😅
-
-
----
-
-## 🌍 English TL;DR (Quick Pitch)
-
-Welcome aboard the **Titanic ML Project**! 🚢  
-We use **Logistic Regression (with GridSearchCV)** and feature engineering to predict who survived the Titanic disaster.
-
-### 🔑 Features
-- Python + scikit-learn pipeline
-- Cross-validation & hyperparameter tuning
-- Fun feature engineering (Title, FamilySize, Age bins, etc.)
-- Generates `submission.csv` for [Kaggle Titanic Competition](https://www.kaggle.com/c/titanic)
-
-### 🏃 Quickstart
 ```bash
-# Linux / macOS
-python train_logreg_grid.py --train data/train.csv --out artifacts/model.joblib --metrics artifacts/metrics.json
-python predict_logreg.py --model artifacts/model.joblib --test data/test.csv --out artifacts/submission.csv
-
-# Windows (PowerShell)
-python .\train_logreg_grid.py --train data\train.csv --out artifacts/model.joblib --metrics artifacts/metrics.json
-python .\predict_logreg.py --model artifacts/model.joblib --test data/test.csv --out artifacts/submission.csv
+pytest tests/
 ```
 
---- 
-
-### 🎉 Submission
-
-Upload your generated submission.csv on Kaggle and climb the leaderboard! 🏆
+The end-to-end test trains on `data/train.csv` and asserts CV mean accuracy ≥ 75%.
