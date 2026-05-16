@@ -43,9 +43,11 @@ def save_coef_report(pipeline, path_out: str):
     ajudando a entender o que mais pesa na decisão.
     """
     if "clf" not in pipeline.named_steps:
+        logger.warning("save_coef_report: step 'clf' not found in pipeline — skipping report.")
         return
     clf = pipeline.named_steps["clf"]
     if not hasattr(clf, "coef_"):
+        logger.warning("save_coef_report: classifier has no coef_ attribute — skipping report.")
         return
 
     feature_names = extract_feature_names(pipeline)
@@ -59,6 +61,7 @@ def save_coef_report(pipeline, path_out: str):
     out = Path(path_out)
     out.parent.mkdir(parents=True, exist_ok=True)
     df_coef.to_csv(out, index=False)
+    logger.info(f"Coef report saved to {out} ({len(df_coef)} features).")
 
 
 def main():
